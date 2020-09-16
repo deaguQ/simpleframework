@@ -1,0 +1,52 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   EnumStarvingSingleton.java
+
+package demo.pattern.singleton;
+
+
+public class EnumStarvingSingleton
+{
+    private static final class ContainerHolder extends Enum
+    {
+
+        public static ContainerHolder[] values()
+        {
+            return (ContainerHolder[])$VALUES.clone();
+        }
+
+        public static ContainerHolder valueOf(String s)
+        {
+            return (ContainerHolder)Enum.valueOf(demo/pattern/singleton/EnumStarvingSingleton$ContainerHolder, s);
+        }
+
+        public static final ContainerHolder HOLDER;
+        private EnumStarvingSingleton instance;
+        private static final ContainerHolder $VALUES[];
+
+        static 
+        {
+            HOLDER = new ContainerHolder("HOLDER", 0);
+            $VALUES = (new ContainerHolder[] {
+                HOLDER
+            });
+        }
+
+        private ContainerHolder(String s, int i)
+        {
+            super(s, i);
+            instance = new EnumStarvingSingleton();
+        }
+    }
+
+
+    private EnumStarvingSingleton()
+    {
+    }
+
+    public static EnumStarvingSingleton getInstance()
+    {
+        return ContainerHolder.HOLDER.instance;
+    }
+}
